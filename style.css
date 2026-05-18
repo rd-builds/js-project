@@ -2910,3 +2910,129 @@ body{
   }
 
 }
+
+.top-contact-bar {
+  background: #2D5A27;
+  padding: 10px 0;
+  font-size: 13px;
+}
+
+.contact-bar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tender-badge {
+  background: #E8B86B;
+  color: #2D5A27;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.contact-right {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.contact-right a,
+.contact-right span {
+  color: #FFF8F0;
+  text-decoration: none;
+  font-size: 13px;
+  transition: opacity 0.3s;
+}
+
+.contact-right a:hover {
+  opacity: 0.8;
+}
+
+.contact-right i {
+  margin-right: 6px;
+  font-size: 12px;
+}
+
+/* ===== HERO WITH MP4 VIDEO BACKGROUND ===== */
+.hero-mp4 {
+  position: relative;
+  height: 90vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Video Background */
+.hero-bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%);
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Dark Overlay for Text Readability */
+.hero-overlay-dark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+}
+
+/* Hero Content */
+.hero-content-center {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #ffffff;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.hero-content-center h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero-content-center p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-mp4 {
+    height: 70vh;
+  }
+  
+  .hero-content-center h1 {
+    font-size: 32px;
+  }
+  
+  .hero-content-center p {
+    font-size: 16px;
+  }
+}
+
+/* Optional: Pause video when not in view (saves battery) */
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-video {
+    display: none;
+  }
+}

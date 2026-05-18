@@ -24,16 +24,16 @@ navLinks.forEach(link => {
 });
 
 // Forms
-["volunteerForm","partnerForm","donateForm"].forEach(id=>{
-  const form=document.getElementById(id);
-  if(form){
-    form.addEventListener("submit",e=>{
-      e.preventDefault();
-      showToast("Submitted successfully ✅");
-      form.reset();
-    });
-  }
-});
+// ["volunteerForm","partnerForm","donateForm"].forEach(id=>{
+//   const form=document.getElementById(id);
+//   if(form){
+//     form.addEventListener("submit",e=>{
+//       e.preventDefault();
+//       showToast("Submitted successfully ✅");
+//       form.reset();
+//     });
+//   }
+// });
 
 // Toast
 function showToast(msg){
@@ -182,154 +182,70 @@ toggleBtns.forEach(btn => {
 
 const donateForm = document.getElementById("donateForm");
 
-
 if (donateForm) {
 
   donateForm.addEventListener("submit", (e) => {
 
     e.preventDefault();
 
-    const nameInput =
-      document.getElementById("donorName");
+    const nameInput = document.getElementById("donorName");
+    const emailInput = document.getElementById("donorEmail");
 
-    const emailInput =
-      document.getElementById("donorEmail");
-
-    const nameError =
-      document.getElementById("nameError");
-
-    const emailError =
-      document.getElementById("emailError");
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
 
     let valid = true;
 
-
-
     /* RESET */
-
     nameError.innerText = "";
-
     emailError.innerText = "";
 
+    nameInput.classList.remove("input-error", "input-success");
+    emailInput.classList.remove("input-error", "input-success");
 
+    /* NAME VALIDATION */
+    if (nameInput.value.trim().length < 3) {
 
-    nameInput.classList.remove(
-      "input-error",
-      "input-success"
-    );
+      nameError.innerText = "Enter a valid full name";
 
-    emailInput.classList.remove(
-      "input-error",
-      "input-success"
-    );
-
-
-
-    /* NAME */
-
-    const nameValue =
-      nameInput.value.trim();
-
-    if (nameValue.length < 3) {
-
-      nameError.innerText =
-        "Enter a valid full name";
-
-      nameInput.classList.add(
-        "input-error"
-      );
+      nameInput.classList.add("input-error");
 
       valid = false;
 
     } else {
 
-      nameInput.classList.add(
-        "input-success"
-      );
+      nameInput.classList.add("input-success");
 
     }
 
-
-
-    /* EMAIL */
-
-    const emailValue =
-      emailInput.value.trim();
-
+    /* EMAIL VALIDATION */
     const emailPattern =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailPattern.test(emailValue)) {
+    if (!emailPattern.test(emailInput.value.trim())) {
 
-      emailError.innerText =
-        "Enter a valid email address";
+      emailError.innerText = "Enter a valid email address";
 
-      emailInput.classList.add(
-        "input-error"
-      );
+      emailInput.classList.add("input-error");
 
       valid = false;
 
     } else {
 
-      emailInput.classList.add(
-        "input-success"
-      );
+      emailInput.classList.add("input-success");
 
     }
-
-
 
     /* SUCCESS */
-
-    // if (valid) {
-
-    //   nameError.innerText = "";
-
-    //   emailError.innerText = "";
-
-
-
-    //   alert(
-    //     `Donation of ₹${selectedAmount} submitted successfully 💙`
-    //   );
-
-
-
-    //   donateForm.reset();
-
-
-
-    //   donateMainBtn.innerText =
-    //     "Donate ₹6000";
-
-
-
-    //   selectedAmount = 6000;
-
-
-
-    //   amountBtns.forEach(btn =>
-    //     btn.classList.remove("active")
-    //   );
-
-
-
-    //   amountBtns[0].classList.add(
-    //     "active"
-    //   );
-
-    // }
-
-  });
-
-}
-
+    /* SUCCESS */
 if (valid) {
 
+  nameError.innerText = "";
+  emailError.innerText = "";
+
   alert(
-    `Donation of ₹${selectedAmount} submitted successfully 💙`
-  );
+  `🎉 Thank you for donating ₹${selectedAmount}!\n\nYour support helps children build a brighter future 💙`
+);
 
   donateForm.reset();
 
@@ -338,11 +254,12 @@ if (valid) {
 
   selectedAmount = 6000;
 
-  amountBtns.forEach(b =>
-    b.classList.remove("active")
-  );
+  nameInput.classList.remove("input-success");
+  emailInput.classList.remove("input-success");
 
-  amountBtns[0].classList.add("active");
+}
+
+  });
 
 }
 
@@ -393,7 +310,7 @@ const activeTriangle =
 activeTriangle.style.borderTopColor =
   tab.dataset.color;
 
-// impactTab.style.color = tab.dataset.textcolor;
+impactTab.style.color = tab.dataset.textcolor;
 
   });
 
@@ -645,3 +562,264 @@ if (partnerForm) {
   });
 
 }
+
+const slider = document.querySelector(".slider-container");
+const cards = document.querySelectorAll(".story-card");
+
+const nextBtn = document.querySelector(".next");
+const prevBtn = document.querySelector(".prev");
+
+let index = 0;
+const totalCards = cards.length;
+
+function updateSlider() {
+  slider.style.transform = `translateX(-${index * 100}%)`;
+}
+
+/* NEXT BUTTON */
+nextBtn.addEventListener("click", () => {
+  index++;
+
+  if (index >= totalCards) {
+    index = 0;
+  }
+
+  updateSlider();
+});
+
+/* PREV BUTTON */
+prevBtn.addEventListener("click", () => {
+  index--;
+
+  if (index < 0) {
+    index = totalCards - 1;
+  }
+
+  updateSlider();
+});
+
+/* AUTO SLIDE */
+setInterval(() => {
+  index++;
+
+  if (index >= totalCards) {
+    index = 0;
+  }
+
+  updateSlider();
+}, 4000);
+
+
+
+const modal = document.getElementById("storyModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalText = document.getElementById("modalText");
+
+const openButtons = document.querySelectorAll(".open-story");
+const closeBtn = document.querySelector(".close-btn");
+
+/* OPEN MODAL */
+openButtons.forEach(button => {
+
+  button.addEventListener("click", function(e){
+
+    e.preventDefault();
+
+    modalTitle.innerText = this.dataset.title;
+    modalText.innerText = this.dataset.text;
+
+    modal.classList.add("show");
+
+  });
+
+});
+
+/* CLOSE MODAL */
+closeBtn.addEventListener("click", function(){
+
+  modal.classList.remove("show");
+
+});
+
+/* CLOSE WHEN CLICKING OUTSIDE */
+window.addEventListener("click", function(e){
+
+  if(e.target === modal){
+
+    modal.classList.remove("show");
+
+  }
+
+});
+
+// Footer Newsletter Form
+const footerNewsletter = document.getElementById('footerNewsletterForm');
+if (footerNewsletter) {
+  footerNewsletter.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = footerNewsletter.querySelector('input[type="email"]').value;
+    if (email) {
+      showToast('Thanks for subscribing! 💌');
+      footerNewsletter.reset();
+    }
+  });
+}
+
+
+/* ===== TESTIMONIAL CAROUSEL WITH AUTO-ROTATE ===== */
+(function() {
+  let currentSlide = 0;
+  let autoRotateInterval;
+  let isAutoRotating = true;
+  const rotationDelay = 5000; // 5 seconds per slide
+  
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dots = document.querySelectorAll('.dot');
+  const prevBtn = document.getElementById('testimonialPrev');
+  const nextBtn = document.getElementById('testimonialNext');
+  const progressBar = document.querySelector('.auto-rotate-progress');
+  
+  // Only initialize if carousel exists
+  if (slides.length === 0) return;
+  
+  // Function to show specific slide
+  function showSlide(index) {
+    // Remove active class from all slides and dots
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Handle wrap-around
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    
+    currentSlide = index;
+    
+    // Add active class to current slide and dot
+    slides[currentSlide].classList.add('active');
+    if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+    
+    // Reset progress bar animation
+    if (progressBar && isAutoRotating) {
+      const newProgress = progressBar.cloneNode(true);
+      progressBar.parentNode.replaceChild(newProgress, progressBar);
+    }
+  }
+  
+  // Next slide function
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+    resetAutoRotate();
+  }
+  
+  // Previous slide function
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+    resetAutoRotate();
+  }
+  
+  // Reset auto-rotate timer
+  function resetAutoRotate() {
+    if (autoRotateInterval) {
+      clearInterval(autoRotateInterval);
+    }
+    if (isAutoRotating) {
+      startAutoRotate();
+    }
+  }
+  
+  // Start auto-rotate
+  function startAutoRotate() {
+    autoRotateInterval = setInterval(() => {
+      if (isAutoRotating) {
+        nextSlide();
+      }
+    }, rotationDelay);
+  }
+  
+  // Stop auto-rotate (on user interaction)
+  function stopAutoRotate() {
+    isAutoRotating = false;
+    if (autoRotateInterval) {
+      clearInterval(autoRotateInterval);
+      autoRotateInterval = null;
+    }
+    // Change indicator text
+    const indicatorText = document.querySelector('.auto-rotate-text');
+    if (indicatorText) indicatorText.textContent = 'Paused';
+  }
+  
+  // Resume auto-rotate (optional - after 10 seconds of inactivity)
+  let resumeTimeout;
+  function resumeAutoRotate() {
+    if (resumeTimeout) clearTimeout(resumeTimeout);
+    resumeTimeout = setTimeout(() => {
+      if (!isAutoRotating) {
+        isAutoRotating = true;
+        startAutoRotate();
+        const indicatorText = document.querySelector('.auto-rotate-text');
+        if (indicatorText) indicatorText.textContent = 'Auto-rotating';
+      }
+    }, 10000); // Resume after 10 seconds of inactivity
+  }
+  
+  // Event Listeners
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      stopAutoRotate();
+      resumeAutoRotate();
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      stopAutoRotate();
+      resumeAutoRotate();
+    });
+  }
+  
+  // Dot click handlers
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      showSlide(index);
+      stopAutoRotate();
+      resumeAutoRotate();
+    });
+  });
+  
+  // Pause on hover
+  const carousel = document.querySelector('.testimonial-carousel');
+  if (carousel) {
+    carousel.addEventListener('mouseenter', () => {
+      if (autoRotateInterval) {
+        clearInterval(autoRotateInterval);
+        autoRotateInterval = null;
+      }
+    });
+    
+    carousel.addEventListener('mouseleave', () => {
+      if (isAutoRotating && !autoRotateInterval) {
+        startAutoRotate();
+      }
+    });
+  }
+  
+  // Start auto-rotate
+  startAutoRotate();
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (carousel && carousel.matches(':hover')) {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+        stopAutoRotate();
+        resumeAutoRotate();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+        stopAutoRotate();
+        resumeAutoRotate();
+      }
+    }
+  });
+})();

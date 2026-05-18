@@ -15,6 +15,9 @@
 <body>
 
 <!-- NAVBAR -->
+
+
+
 <nav class="navbar navbar-expand-lg navbar-light fixed-top custom-navbar">
   <div class="container">
     <a class="navbar-brand fw-bold" href="#">Sevya Foundation</a>
@@ -176,18 +179,7 @@
 
 <!-- ABOUT -->
 <section id="about" class="py-5 hidden">
-  <!-- < class="container text-center"> -->
-    <!-- <h2 class="fw-bold mb-3">About Sevya Foundation</h2> -->
 
-    <!-- <p class="text-muted">
-      Sevya Foundation is committed to ensuring that no child goes to bed hungry.
-      We provide meals, healthcare, and opportunities to underprivileged children.
-    </p> -->
-
-    <!-- <p class="text-muted">
-      Our mission is to create a holistic ecosystem where children receive nutrition,
-      education, and support to grow into confident individuals. -->
-    <!-- </p> -->
     <section class="about-sevya">
   <div class="container">
     <h2>About Sevya Foundation</h2>
@@ -251,42 +243,42 @@
     <div class="sdg-card sdg-purple">
       <div class="sdg-content">
         <h4>GOOD HEALTH &<br>WELL BEING</h4>
-        <p>#3</p>
+        <p>#1</p>
       </div>
     </div>
 
     <div class="sdg-card sdg-pink">
       <div class="sdg-content">
         <h4>GENDER<br>EQUALITY</h4>
-        <p>#5</p>
+        <p>#2</p>
       </div>
     </div>
 
     <div class="sdg-card sdg-yellow">
       <div class="sdg-content">
         <h4>QUALITY<br>EDUCATION</h4>
-        <p>#4</p>
+        <p>#3</p>
       </div>
     </div>
 
     <div class="sdg-card sdg-green">
       <div class="sdg-content">
         <h4>DECENT WORK &<br>ECONOMIC GROWTH</h4>
-        <p>#8</p>
+        <p>#4</p>
       </div>
     </div>
 
     <div class="sdg-card sdg-blue">
       <div class="sdg-content">
         <h4>REDUCED<br>INEQUALITIES</h4>
-        <p>#10</p>
+        <p>#5</p>
       </div>
     </div>
 
     <div class="sdg-card sdg-lime">
       <div class="sdg-content">
         <h4>PARTNERSHIPS<br>FOR THE GOALS</h4>
-        <p>#17</p>
+        <p>#6</p>
       </div>
     </div>
 
@@ -641,88 +633,119 @@
 
 
 <!-- DONOR SECTION -->
+<!-- DONOR/TESTIMONIAL SECTION WITH CAROUSEL -->
 <section class="donor-section">
-
   <div class="container">
-
-    <!-- TITLE -->
+    
+    <!-- SECTION HEADER -->
     <h2 class="donor-title">
-      WHAT DONOR SAYS
+      WHAT OUR DONORS SAY
     </h2>
-
+    
     <p class="donor-subtitle">
       Donors across the country share our commitment to providing every child
       with a safe and nurturing environment. Here, you can read inspiring
       words written by people like you about supporting children and creating
       a brighter future together.
     </p>
-
-    <!-- CARDS -->
-    <div class="donor-wrapper">
-
-      <!-- CARD 1 -->
-      <div class="donor-card">
-
-        <img src="assets/donor1.jpg" class="donor-img">
-
-        <div class="quote-icon">
-          ❝
+    
+    <!-- TESTIMONIAL CAROUSEL -->
+    <div class="testimonial-carousel">
+      
+      <!-- Carousel Container -->
+      <div class="carousel-container" id="testimonialCarousel">
+        
+        <!-- Testimonial 1 -->
+        <div class="testimonial-slide active">
+          <div class="donor-card">
+            <img src="assets/donor1.jpg" class="donor-img" alt="Bhavesh N. Parmar">
+            <div class="quote-icon">❝</div>
+            <div class="stars">★★★★★</div>
+            <p class="donor-text">
+              "I truly appreciate Sevya Foundation for the incredible work they do
+              in standing up for those in need. It's heartening to see how small
+              acts of kindness can bring real change. I will continue to support 
+              this wonderful cause every month."
+            </p>
+            <h4>Bhavesh N. Parmar</h4>
+            <span>Gujarat, India</span>
+            <div class="donor-stats">
+              <span><i class="fas fa-calendar-alt"></i> Donor since 2022</span>
+              <span><i class="fas fa-heart"></i> 12+ donations</span>
+            </div>
+          </div>
         </div>
-
-        <div class="stars">
-          ★★★★★
+        
+        <!-- Testimonial 2 -->
+        <div class="testimonial-slide">
+          <div class="donor-card">
+            <img src="assets/donor2.jpg" class="donor-img" alt="Pola Venkatappaiah">
+            <div class="quote-icon">❝</div>
+            <div class="stars">★★★★★</div>
+            <p class="donor-text">
+              "It's a simple contribution from my end, but it brings immense
+              happiness and fulfillment. I truly admire the heartfelt efforts
+              of the organization in uplifting children in need. Seeing the 
+              smile on children's faces is my greatest reward."
+            </p>
+            <h4>Pola Venkatappaiah</h4>
+            <span>Telangana, India</span>
+            <div class="donor-stats">
+              <span><i class="fas fa-calendar-alt"></i> Donor since 2021</span>
+              <span><i class="fas fa-heart"></i> 24+ donations</span>
+            </div>
+          </div>
         </div>
-
-        <p class="donor-text">
-          I truly appreciate Sevya Foundation for the incredible work they do
-          in standing up for those in need. It’s heartening to see how small
-          acts of kindness can bring real change.
-        </p>
-
-        <h4>
-          Bhavesh N. Parmar
-        </h4>
-
-        <span>
-          Gujarat
-        </span>
-
+        
+        <!-- Testimonial 3 (NEW) -->
+        <div class="testimonial-slide">
+          <div class="donor-card">
+            <img src="assets/donor3.png" class="donor-img" alt="Priya S. Mehta">
+            <div class="quote-icon">❝</div>
+            <div class="stars">★★★★★</div>
+            <p class="donor-text">
+              "The transparency and dedication of Sevya Foundation inspired me to 
+              become a regular donor. I love how they share regular impact reports 
+              and stories of the children. Every child deserves a chance, and I'm 
+              proud to be part of their journey."
+            </p>
+            <h4>Priya S. Mehta</h4>
+            <span>Mumbai, Maharashtra</span>
+            <div class="donor-stats">
+              <span><i class="fas fa-calendar-alt"></i> Donor since 2023</span>
+              <span><i class="fas fa-heart"></i> 8+ donations</span>
+            </div>
+          </div>
+        </div>
+        
       </div>
-
-      <!-- CARD 2 -->
-      <div class="donor-card">
-
-        <img src="assets/donor2.jpg" class="donor-img">
-
-        <div class="quote-icon">
-          ❝
-        </div>
-
-        <div class="stars">
-          ★★★★★
-        </div>
-
-        <p class="donor-text">
-          It’s a simple contribution from my end, but it brings immense
-          happiness and fulfillment. I truly admire the heartfelt efforts
-          of the organization in uplifting children in need.
-        </p>
-
-        <h4>
-          Pola Venkatappaiah
-        </h4>
-
-        <span>
-          Telangana
-        </span>
-
+      
+      <!-- Carousel Controls -->
+      <button class="carousel-btn prev-btn" id="testimonialPrev">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="carousel-btn next-btn" id="testimonialNext">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      
+      <!-- Dots Indicator -->
+      <div class="carousel-dots" id="testimonialDots">
+        <span class="dot active" data-slide="0"></span>
+        <span class="dot" data-slide="1"></span>
+        <span class="dot" data-slide="2"></span>
       </div>
-
+      
+      <!-- Auto-rotate indicator -->
+      <div class="auto-rotate-indicator">
+        <span class="auto-rotate-text">Auto-rotating</span>
+        <div class="auto-rotate-progress" id="autoRotateProgress"></div>
+      </div>
+      
     </div>
-
+    
   </div>
-
 </section>
+
 
 
 <!-- SUCCESS STORIES SECTION -->
@@ -1121,15 +1144,114 @@
 <!-- BACK TO TOP -->
 <button id="topBtn">↑</button>
 
-<footer class="footer pastel-footer text-center py-3">
+
+
+<!-- MODERN FOOTER -->
+<footer class="seva-footer">
+  <div class="container">
+    <div class="footer-grid">
+      
+      <!-- Column 1: Brand & About -->
+      <div class="footer-col">
+        <h3 class="footer-logo">Sevya Foundation</h3>
+        <p class="footer-about">
+          Dedicated to ensuring no child sleeps hungry. Through nutrition, 
+          education, healthcare, and community support, we're building brighter 
+          futures for underprivileged children across India.
+        </p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#programs">Our Programs</a></li>
+          <li><a href="#get-involved">Get Involved</a></li>
+          <li><a href="donate.html">Donate</a></li>
+          <li><a href="volunteer.html">Volunteer</a></li>
+          <li><a href="partner.html">Partner With Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Programs -->
+      <div class="footer-col">
+        <h4>Our Initiatives</h4>
+        <ul class="footer-links">
+          <li><a href="#">Mid-Day Meal Program</a></li>
+          <li><a href="#">Healthcare Camps</a></li>
+          <li><a href="#">Education Support</a></li>
+          <li><a href="#">Community Development</a></li>
+          <li><a href="#">Women Empowerment</a></li>
+          <li><a href="#">Emergency Relief</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact Info -->
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <ul class="footer-contact">
+          <li>
+            <i class="fas fa-map-marker-alt"></i>
+            <span>123, Community Centre, New Delhi - 110001, India</span>
+          </li>
+          <li>
+            <i class="fas fa-phone-alt"></i>
+            <span>+91 11 1234 5678</span>
+          </li>
+          <li>
+            <i class="fas fa-envelope"></i>
+            <span>info@sevya-foundation.org</span>
+          </li>
+          <li>
+            <i class="fas fa-clock"></i>
+            <span>Mon-Fri: 9:00 AM - 6:00 PM</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div class="footer-newsletter">
+      <h4>Stay Updated</h4>
+      <p>Subscribe to our newsletter for updates on our work and impact stories.</p>
+      <form class="newsletter-form" id="footerNewsletterForm">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <p>&copy; 2025 Sevya Foundation. All Rights Reserved.</p>
+      </div>
+      <div class="footer-bottom-right">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Refund Policy</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- <footer class="footer pastel-footer text-center py-3">
 
   
   <small>© 2025 Sevya Foundation</small>
-</footer>
+</footer> -->
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
+
 <!-- CHATBOT WIDGET -->
 <div id="chat-widget">
   <div id="chat-window">

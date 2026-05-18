@@ -641,3 +641,174 @@ window.addEventListener("click", function(e){
 
 });
 
+// Footer Newsletter Form
+const footerNewsletter = document.getElementById('footerNewsletterForm');
+if (footerNewsletter) {
+  footerNewsletter.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = footerNewsletter.querySelector('input[type="email"]').value;
+    if (email) {
+      showToast('Thanks for subscribing! 💌');
+      footerNewsletter.reset();
+    }
+  });
+}
+
+
+/* ===== TESTIMONIAL CAROUSEL WITH AUTO-ROTATE ===== */
+(function() {
+  let currentSlide = 0;
+  let autoRotateInterval;
+  let isAutoRotating = true;
+  const rotationDelay = 5000; // 5 seconds per slide
+  
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dots = document.querySelectorAll('.dot');
+  const prevBtn = document.getElementById('testimonialPrev');
+  const nextBtn = document.getElementById('testimonialNext');
+  const progressBar = document.querySelector('.auto-rotate-progress');
+  
+  // Only initialize if carousel exists
+  if (slides.length === 0) return;
+  
+  // Function to show specific slide
+  function showSlide(index) {
+    // Remove active class from all slides and dots
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Handle wrap-around
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    
+    currentSlide = index;
+    
+    // Add active class to current slide and dot
+    slides[currentSlide].classList.add('active');
+    if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+    
+    // Reset progress bar animation
+    if (progressBar && isAutoRotating) {
+      const newProgress = progressBar.cloneNode(true);
+      progressBar.parentNode.replaceChild(newProgress, progressBar);
+    }
+  }
+  
+  // Next slide function
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+    resetAutoRotate();
+  }
+  
+  // Previous slide function
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+    resetAutoRotate();
+  }
+  
+  // Reset auto-rotate timer
+  function resetAutoRotate() {
+    if (autoRotateInterval) {
+      clearInterval(autoRotateInterval);
+    }
+    if (isAutoRotating) {
+      startAutoRotate();
+    }
+  }
+  
+  // Start auto-rotate
+  function startAutoRotate() {
+    autoRotateInterval = setInterval(() => {
+      if (isAutoRotating) {
+        nextSlide();
+      }
+    }, rotationDelay);
+  }
+  
+  // Stop auto-rotate (on user interaction)
+  function stopAutoRotate() {
+    isAutoRotating = false;
+    if (autoRotateInterval) {
+      clearInterval(autoRotateInterval);
+      autoRotateInterval = null;
+    }
+    // Change indicator text
+    const indicatorText = document.querySelector('.auto-rotate-text');
+    if (indicatorText) indicatorText.textContent = 'Paused';
+  }
+  
+  // Resume auto-rotate (optional - after 10 seconds of inactivity)
+  let resumeTimeout;
+  function resumeAutoRotate() {
+    if (resumeTimeout) clearTimeout(resumeTimeout);
+    resumeTimeout = setTimeout(() => {
+      if (!isAutoRotating) {
+        isAutoRotating = true;
+        startAutoRotate();
+        const indicatorText = document.querySelector('.auto-rotate-text');
+        if (indicatorText) indicatorText.textContent = 'Auto-rotating';
+      }
+    }, 10000); // Resume after 10 seconds of inactivity
+  }
+  
+  // Event Listeners
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      stopAutoRotate();
+      resumeAutoRotate();
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      stopAutoRotate();
+      resumeAutoRotate();
+    });
+  }
+  
+  // Dot click handlers
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      showSlide(index);
+      stopAutoRotate();
+      resumeAutoRotate();
+    });
+  });
+  
+  // Pause on hover
+  const carousel = document.querySelector('.testimonial-carousel');
+  if (carousel) {
+    carousel.addEventListener('mouseenter', () => {
+      if (autoRotateInterval) {
+        clearInterval(autoRotateInterval);
+        autoRotateInterval = null;
+      }
+    });
+    
+    carousel.addEventListener('mouseleave', () => {
+      if (isAutoRotating && !autoRotateInterval) {
+        startAutoRotate();
+      }
+    });
+  }
+  
+  // Start auto-rotate
+  startAutoRotate();
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (carousel && carousel.matches(':hover')) {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+        stopAutoRotate();
+        resumeAutoRotate();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+        stopAutoRotate();
+        resumeAutoRotate();
+      }
+    }
+  });
+})();

@@ -182,73 +182,167 @@ toggleBtns.forEach(btn => {
 
 const donateForm = document.getElementById("donateForm");
 
+
 if (donateForm) {
 
   donateForm.addEventListener("submit", (e) => {
 
     e.preventDefault();
 
-    const nameInput = document.getElementById("donorName");
-    const emailInput = document.getElementById("donorEmail");
+    const nameInput =
+      document.getElementById("donorName");
 
-    const nameError = document.getElementById("nameError");
-    const emailError = document.getElementById("emailError");
+    const emailInput =
+      document.getElementById("donorEmail");
+
+    const nameError =
+      document.getElementById("nameError");
+
+    const emailError =
+      document.getElementById("emailError");
 
     let valid = true;
 
+
+
     /* RESET */
+
     nameError.innerText = "";
+
     emailError.innerText = "";
 
-    nameInput.classList.remove("input-error", "input-success");
-    emailInput.classList.remove("input-error", "input-success");
 
-    /* NAME VALIDATION */
-    if (nameInput.value.trim().length < 3) {
 
-      nameError.innerText = "Enter a valid full name";
+    nameInput.classList.remove(
+      "input-error",
+      "input-success"
+    );
 
-      nameInput.classList.add("input-error");
+    emailInput.classList.remove(
+      "input-error",
+      "input-success"
+    );
+
+
+
+    /* NAME */
+
+    const nameValue =
+      nameInput.value.trim();
+
+    if (nameValue.length < 3) {
+
+      nameError.innerText =
+        "Enter a valid full name";
+
+      nameInput.classList.add(
+        "input-error"
+      );
 
       valid = false;
 
     } else {
 
-      nameInput.classList.add("input-success");
+      nameInput.classList.add(
+        "input-success"
+      );
 
     }
 
-    /* EMAIL VALIDATION */
+
+
+    /* EMAIL */
+
+    const emailValue =
+      emailInput.value.trim();
+
     const emailPattern =
-      /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailPattern.test(emailInput.value.trim())) {
+    if (!emailPattern.test(emailValue)) {
 
-      emailError.innerText = "Enter a valid email address";
+      emailError.innerText =
+        "Enter a valid email address";
 
-      emailInput.classList.add("input-error");
+      emailInput.classList.add(
+        "input-error"
+      );
 
       valid = false;
 
     } else {
 
-      emailInput.classList.add("input-success");
+      emailInput.classList.add(
+        "input-success"
+      );
 
     }
+
+
 
     /* SUCCESS */
-    if (valid) {
 
-      showToast("Donation Submitted Successfully 💙");
+    // if (valid) {
 
-      donateForm.reset();
+    //   nameError.innerText = "";
 
-      nameInput.classList.remove("input-success");
-      emailInput.classList.remove("input-success");
+    //   emailError.innerText = "";
 
-    }
+
+
+    //   alert(
+    //     `Donation of ₹${selectedAmount} submitted successfully 💙`
+    //   );
+
+
+
+    //   donateForm.reset();
+
+
+
+    //   donateMainBtn.innerText =
+    //     "Donate ₹6000";
+
+
+
+    //   selectedAmount = 6000;
+
+
+
+    //   amountBtns.forEach(btn =>
+    //     btn.classList.remove("active")
+    //   );
+
+
+
+    //   amountBtns[0].classList.add(
+    //     "active"
+    //   );
+
+    // }
 
   });
+
+}
+
+if (valid) {
+
+  alert(
+    `Donation of ₹${selectedAmount} submitted successfully 💙`
+  );
+
+  donateForm.reset();
+
+  donateMainBtn.innerText =
+    `Donate ₹6000`;
+
+  selectedAmount = 6000;
+
+  amountBtns.forEach(b =>
+    b.classList.remove("active")
+  );
+
+  amountBtns[0].classList.add("active");
 
 }
 
@@ -299,7 +393,7 @@ const activeTriangle =
 activeTriangle.style.borderTopColor =
   tab.dataset.color;
 
-impactTab.style.color = tab.dataset.textcolor;
+// impactTab.style.color = tab.dataset.textcolor;
 
   });
 

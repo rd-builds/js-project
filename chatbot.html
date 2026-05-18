@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Chatbot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+</head>
+<body>
+
+  <!-- Demo page (your existing project would replace this) -->
+  <div class="demo-page">
+    <h1>AI Chatbot</h1>
+    <p>A plug-and-play chatbot widget powered by<br>the Anthropic Claude API (free tier).</p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <strong>Get your free API key</strong>
+        <p>Visit <code>console.anthropic.com</code> → Sign up → API Keys → Create Key (free credits included)</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <strong>Paste your key in the chatbot</strong>
+        <p>Click the chat button → enter your key → hit Save</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <strong>Embed in your project</strong>
+        <p>Copy everything inside <code>&lt;!-- CHATBOT WIDGET --&gt;</code> into your HTML</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       CHATBOT WIDGET — copy this block into
+       your existing project's HTML file
+  ══════════════════════════════════════════ -->
+  <div id="chat-widget">
+
+    <!-- Chat Window -->
+    <div id="chat-window">
+
+      <!-- Header -->
+      <div class="chat-header">
+        <div class="avatar">🤖</div>
+        <div class="header-info">
+          <h3>AI Assistant</h3>
+          <span>Powered by Claude</span>
+        </div>
+        <button class="close-btn" id="close-btn" title="Close">✕</button>
+      </div>
+
+
+      <!-- Messages -->
+      <div id="messages">
+        <div class="hint">Start a conversation below ↓</div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-footer">
+        <textarea id="user-input" placeholder="Ask me anything…" rows="1"></textarea>
+        <button id="send-btn" title="Send">➤</button>
+      </div>
+
+    </div>
+
+    <!-- Toggle Button -->
+    <button id="chat-toggle" title="Open Chat">
+      💬
+      <div class="unread-dot" id="unread-dot"></div>
+    </button>
+
+  </div>
+  <!-- ══════════════════════════════════════════
+       END CHATBOT WIDGET
+  ══════════════════════════════════════════ -->
+
+
+  <script>
+    // ── State ──────────────────────────────────
+    let isOpen = false;
+    let apiKey = localStorage.getItem('claude_api_key') || '';
+    let conversationHistory = [];
+    let isLoading = false;
+
+    // ── DOM refs ───────────────────────────────
+    const chatWindow   = document.getElementById('chat-window');
+    const chatToggle   = document.getElementById('chat-toggle');
+    const closeBtn     = document.getElementById('close-btn');
+    const messages     = document.getElementById('messages');
+    const userInput    = document.getElementById('user-input');
+    const sendBtn      = document.getElementById('send-btn');
+    const apiKeyInput  = document.getElementById('api-key-input');
+    const saveKeyBtn   = document.getElementById('save-key');
+    const apiBanner    = document.getElementById('api-banner');
+    const unreadDot    = document.getElementById('unread-dot');
+
+    // ── Init ───────────────────────────────────
+    if (apiKey) {
+      apiKeyInput.value = apiKey;
+      hideBanner();
+    }
+
+    function hideBanner() {
+      apiBanner.style.display = 'none';
+    }
+
+    function showBanner() {
+      apiBanner.style.display = 'flex';
+    }
+
+    // ── Toggle chat ────────────────────────────
+    chatToggle.addEventListener('click', () => {
+      isOpen = !isOpen;
+      chatWindow.classList.toggle('open', isOpen);
+      chatToggle.innerHTML = isOpen ? '✕' : '💬<div class="unread-dot" id="unread-dot" style="display:none"></div>';
+      if (isOpen) {
+        unreadDot.style.display = 'none';
+        setTimeout(() => userInput.focus(), 320);
+      }
+    });
+
+    closeBtn.addEventListener('click', () => {
+      isOpen = false;
+      chatWindow.classList.remove('open');
+      chatToggle.innerHTML = '💬<div class="unread-dot" id="unread-dot" style="display:none"></div>';
+    });
+
+    // ── Save API key ───────────────────────────
+    saveKeyBtn.addEventListener('click', () => {
+      const key = apiKeyInput.value.trim();
+      if (!key.startsWith('sk-ant-')) {
+        flash(apiKeyInput, '#ef4444');
+        return;
+      }
+      apiKey = key;
+      localStorage.setItem('claude_api_key', key);
+      hideBanner();
+      addMessage('bot', '✅ API key saved! How can I help you today?');
+    });
+
+    function flash(el, color) {
+      el.style.borderColor = color;
+      setTimeout(() => el.style.borderColor = '', 1000);
+    }
+
+    // ── Auto-resize textarea ───────────────────
+    userInput.addEventListener('input', () => {
+      userInput.style.height = '42px';
+      userInput.style.height = Math.min(userInput.scrollHeight, 100) + 'px';
+    });
+
+    // ── Send on Enter (Shift+Enter = newline) ──
+    userInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    sendBtn.addEventListener('click', sendMessage);
+
+    // ── Add message to UI ──────────────────────
+    function addMessage(role, text) {
+      // Remove hint if present
+      const hint = messages.querySelector('.hint');
+      if (hint) hint.remove();
+
+      const div = document.createElement('div');
+      div.className = `msg ${role}`;
+
+      if (role === 'bot') {
+        div.innerHTML = `<div class="label">Claude</div>${escapeHtml(text)}`;
+      } else if (role === 'error') {
+        div.innerHTML = `⚠️ ${escapeHtml(text)}`;
+      } else {
+        div.textContent = text;
+      }
+
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+
+      // Show unread dot if closed
+      if (!isOpen && role === 'bot') {
+        unreadDot.style.display = 'block';
+      }
+
+      return div;
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/\n/g,'<br>');
+    }
+
+    // ── Typing indicator ───────────────────────
+    function showTyping() {
+      const div = document.createElement('div');
+      div.className = 'msg bot';
+      div.id = 'typing-indicator';
+      div.innerHTML = `
+        <div class="label">Claude</div>
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>`;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function hideTyping() {
+      const el = document.getElementById('typing-indicator');
+      if (el) el.remove();
+    }
+
+    // ── Main send function ─────────────────────
+    async function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text || isLoading) return;
+
+      if (!apiKey) {
+        showBanner();
+        addMessage('error', 'Please enter your Anthropic API key first.');
+        return;
+      }
+
+      // Add user message
+      addMessage('user', text);
+      conversationHistory.push({ role: 'user', content: text });
+      userInput.value = '';
+      userInput.style.height = '42px';
+
+      isLoading = true;
+      sendBtn.disabled = true;
+      showTyping();
+
+      try {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true'
+          },
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',  // Most cost-efficient model
+            max_tokens: 1024,
+            system: 'You are a helpful, concise AI assistant embedded in a website. Be friendly and answer clearly.',
+            messages: conversationHistory
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error?.message || `API error ${response.status}`);
+        }
+
+        const reply = data.content?.[0]?.text || '(No response)';
+        conversationHistory.push({ role: 'assistant', content: reply });
+
+        hideTyping();
+        addMessage('bot', reply);
+
+      } catch (err) {
+        hideTyping();
+        let errMsg = err.message;
+        if (errMsg.includes('401')) errMsg = 'Invalid API key. Please check and re-enter.';
+        if (errMsg.includes('429')) errMsg = 'Rate limit reached. Please wait a moment and try again.';
+        addMessage('error', errMsg);
+      } finally {
+        isLoading = false;
+        sendBtn.disabled = false;
+        userInput.focus();
+      }
+    }
+
+  </script>
+</body>
+</html>

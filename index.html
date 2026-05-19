@@ -96,7 +96,21 @@
         </ul>
       </div>
 
-    </div>
+<!-- Google Translate Widget - Language Switcher -->
+<div id="google_translate_element" style="text-align: right; margin: 10px;"></div>
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,hi,bn,te,ta,ml,kn,gu,mr,pa,es,fr,de,zh',
+      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
   </nav>
 
 
@@ -637,6 +651,31 @@
   </section>
 
 
+
+  <!-----======================================================================
+      JOIN US SECTION
+  ==============================-!>
+<!-- UPCOMING EVENTS SECTION - Modern Card Layout -->
+<section class="events-section">
+  <div class="events-container">
+   <center><h1 class="events-title">Upcoming events</h1> 
+    <h2 class="events-subtitle">Join our upcoming events for contribution</h2> <br> </center>
+
+    <div class="events-grid" id="eventsGrid"></div>
+  </div>
+</section>
+
+<!-- Registration Modal -->
+<div id="registerModal" class="register-modal">
+  <div class="register-modal-content">
+    <span class="register-modal-close">&times;</span>
+    <h3 id="registerModalTitle">Register for Event</h3>
+    <input type="text" id="registerName" placeholder="Full Name">
+    <input type="email" id="registerEmail" placeholder="Email Address">
+    <button id="registerSubmitBtn">Confirm Registration</button>
+  </div>
+</div>
+
   <!-- ============================================================
        11. NARRATIVE SECTION
        Three-column layout: left causes · centre circle · right causes
@@ -1166,6 +1205,97 @@
   <button id="topBtn" title="Back to top">↑</button>
 
 
+
+
+  <!-- ========================================================================================================
+  START: Media Mentions Section
+   =================================================-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<div style="
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem 1.5rem;
+  background: #ffffff;
+  border-radius: 2rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+">
+  <!-- Heading -->
+  <div style="margin-bottom: 2rem;">
+    <span style="
+      display: inline-block;
+      background: #f0f2f5;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #1e293b;
+      text-transform: uppercase;
+    ">As featured in</span>
+    <h2 style="
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-top: 0.75rem;
+      margin-bottom: 0;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    ">Media Mentions</h2>
+  </div>
+
+  <!-- Logo Grid -->
+  <div style="
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    row-gap: 2rem;
+  ">
+    <!-- THE TIMES OF INDIA -->
+    <div style="
+      flex: 0 0 auto;
+      min-width: 140px;
+      padding: 0.75rem 1.2rem;
+      background: #fafbfc;
+      border-radius: 1.25rem;
+      transition: all 0.2s ease;
+    ">
+      <div style="font-weight: 800; font-size: 1.25rem; letter-spacing: -0.3px; color: #1e293b;">THE TIMES<br>OF INDIA</div>
+      <div style="font-size: 0.65rem; color: #7c4d1e; margin-top: 6px; font-weight: 500;">▲ INDIA'S LEADING DAILY</div>
+    </div>
+
+    <!-- CNBC -->
+    <div style="
+      flex: 0 0 auto;
+      min-width: 140px;
+      padding: 0.75rem 1.2rem;
+      background: #fafbfc;
+      border-radius: 1.25rem;
+    ">
+      <div style="font-weight: 800; font-size: 1.6rem; letter-spacing: -0.5px; background: linear-gradient(135deg, #0b2b40, #1a5d7d); -webkit-background-clip: text; background-clip: text; color: transparent;">CNBC</div>
+      <div style="font-size: 0.65rem; color: #0b2b40; font-weight: 500;">TV18 • BUSINESS NEWS</div>
+    </div>
+
+    <!-- ZEENEWS -->
+    <div style="
+      flex: 0 0 auto;
+      min-width: 140px;
+      padding: 0.75rem 1.2rem;
+      background: #fafbfc;
+      border-radius: 1.25rem;
+    ">
+      <div style="font-weight: 800; font-size: 1.45rem; letter-spacing: -0.5px; color: #bd2b2b;">ZEE</div>
+      <div style="font-weight: 700; font-size: 1rem; letter-spacing: -0.2px; color: #bd2b2b;">NEWS</div>
+      <div style="font-size: 0.6rem; color: #4b5563; margin-top: 6px;">सत्यम शिवम सुंदरम</div>
+    </div>
+  </div>
+</div>
+<!-- END: Media Mentions Section -->
+
+
+
   <!-- ============================================================
        16. FOOTER
   ============================================================ -->
@@ -1270,6 +1400,7 @@
   </footer>
 
 
+
   <!-- ============================================================
        17. CHATBOT WIDGET
        Toggle visibility via #chat-toggle button; logic in chatbot.js
@@ -1306,6 +1437,9 @@
     <button id="chat-toggle">💬</button>
 
   </div><!-- end #chat-widget -->
+
+
+
 
 
   <!-- ============================================================

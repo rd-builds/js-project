@@ -823,3 +823,131 @@ if (footerNewsletter) {
     }
   });
 })();
+
+
+  // <!-----======================================================================
+  //     JOIN US SECTION
+  // ==============================-!>
+  // events.js - Interactive Events with Registration
+
+const events = [
+  {
+    tag: '#FoodCamp',
+    title: 'Healthy food and nutrition awareness campaign december',
+    desc: 'A food and nutrition awareness campaign focused on providing healthy meals, spreading nutrition education, and supporting underprivileged families for a healthier future.',
+    location: 'Sukhna Lake, Chandigarh',
+    time: '2 pm',
+    day: '10', mon: 'Jun',
+    img: 'https://storage.googleapis.com/peporg-bucket/blog_images/Donate_Food_on_Your_Birthday_-_Orphanage_Children_in_Hyderabad.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=pep-admin%40pepfoundation.iam.gserviceaccount.com%2F20260519%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260519T160801Z&X-Goog-Expires=86400&X-Goog-SignedHeaders=host&X-Goog-Signature=2db95644c91a5e5deee6503514ee7e96ba89a011b0c79187600d7bc69486a13aca6524a6a73702c6fe75d49085d36f2b4aa11660b2d55b2b3ac78dfce860e89974ef324979f9c04282962bc73ca8d77e6d54ee561a52e922e0cf4a11e4d1af09da09f6fbb30853aeb8be6e564862fb827f24fdf99a540ad0c9603321aca36360923de9c070543a4f166e4b6d7e510870ec49e1ad0f41bb695f16154fb2dd380d72273d8e228564bc553e524af618856b40df768224c020f6c7e4f57b40db29a53909b0bb8e3bca7db21006f2cea60aa5b302c7fd91ce034343f87033850ab7039780013b7c4c9a64da8bfe5b5a39dbce235da81a75a8de66ff43c6504b83e3cc', // ← put your image path here
+    featured: true
+  },
+  {
+    tag: '#RunForElder',
+    title: 'Run for the senior citizens.',
+    desc: 'A community marathon dedicated to supporting and empowering senior citizens through healthcare, companionship, and social care.',
+    location: 'Town Park, Panchkula',
+    time: '6 am', day: '25', mon: 'May'
+  },
+  {
+    tag: '#ChildrenEducation',
+    title: 'Education for all children',
+    desc: 'An initiative providing quality education and learning resources for children to build a brighter future.',
+    location: 'Rajouri Garden, New Delhi',
+    time: '5 pm', day: '25', mon: 'Jun'
+  },
+  {
+    tag: '#RightForWomen',
+    title: 'Stop violence against women',
+    desc: 'Raising awareness and taking action to end violence against women in our communities.',
+    location: 'Sector 17, Chandigarh',
+    time: '4 pm', day: '15', mon: 'Jul'
+  }
+];
+
+function locIcon() {
+  return `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D85A30" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>`;
+}
+function timeIcon() {
+  return `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D85A30" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>`;
+}
+
+function renderEvents() {
+  const grid = document.getElementById('eventsGrid');
+  const featured = events[0];
+  const sides = events.slice(1);
+
+  const featuredHTML = `
+    <div class="featured-card">
+      ${featured.img
+        ? `<img class="event-img" src="${featured.img}" alt="${featured.title}">`
+        : `<div class="event-img" style="background:#c8d4c0;height:220px"></div>`}
+      <div class="featured-body">
+        <p class="event-tag">${featured.tag}</p>
+        <div class="feat-title-row">
+          <h3>${featured.title}</h3>
+          <div class="date-blob">
+            <div class="day">${featured.day}</div>
+            <div class="mon">${featured.mon}</div>
+          </div>
+        </div>
+        <p class="feat-desc">${featured.desc}</p>
+        <div class="feat-meta">
+          <div class="meta-item">${locIcon()}<span><span class="ml">Location:</span><span class="mv">${featured.location}</span></span></div>
+          <div class="meta-item">${timeIcon()}<span><span class="ml">Starts at:</span><span class="mv">${featured.time}</span></span></div>
+        </div>
+        <button class="btn-join" onclick="openRegisterModal('${featured.title}')">Join event →</button>
+      </div>
+    </div>`;
+
+  const sideCardsHTML = `
+    <div class="side-cards">
+      ${sides.map(e => `
+        <div class="side-card" onclick="openRegisterModal('${e.title}')">
+          <div class="side-card-body">
+            <p class="side-tag">${e.tag}</p>
+            <p class="side-title">${e.title}</p>
+            <p class="side-desc">${e.desc}</p>
+            <div class="side-meta">
+              <div class="side-meta-item">${locIcon()}<span><span class="ml">Location:</span><span class="mv">${e.location}</span></span></div>
+              <div class="side-meta-item">${timeIcon()}<span><span class="ml">Starts at:</span><span class="mv">${e.time}</span></span></div>
+            </div>
+          </div>
+          <div class="side-blob">
+            <div class="day">${e.day}</div>
+            <div class="mon">${e.mon}</div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+
+  grid.innerHTML = featuredHTML + sideCardsHTML;
+}
+
+// Modal logic
+function openRegisterModal(title) {
+  document.getElementById('registerModalTitle').textContent = 'Register — ' + title;
+  document.getElementById('registerName').value = '';
+  document.getElementById('registerEmail').value = '';
+  document.getElementById('registerModal').style.display = 'flex';
+}
+
+document.querySelector('.register-modal-close').addEventListener('click', () => {
+  document.getElementById('registerModal').style.display = 'none';
+});
+
+document.getElementById('registerModal').addEventListener('click', function(e) {
+  if (e.target === this) this.style.display = 'none';
+});
+
+document.getElementById('registerSubmitBtn').addEventListener('click', () => {
+  const name = document.getElementById('registerName').value.trim();
+  const email = document.getElementById('registerEmail').value.trim();
+  if (!name || !email) { alert('Please fill in all fields.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Enter a valid email.'); return; }
+  document.getElementById('registerModal').style.display = 'none';
+  alert(`✓ Registered! See you at the event, ${name}.`);
+});
+
+// Also update your HTML title if needed:
+// <h1 class="events-title">Upcoming <span class="highlight">events</span></h1>
+
+renderEvents();

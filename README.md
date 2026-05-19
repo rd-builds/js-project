@@ -41,12 +41,6 @@ A modern NGO website built to spread awareness, encourage donations, and support
 
 ---
 
-## 📸 Screenshots
-
-_Add project screenshots here_
-
----
-
 ## 👨‍💻 Team
 
 - Your Name

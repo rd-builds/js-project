@@ -43,8 +43,8 @@ A modern NGO website built to spread awareness, encourage donations, and support
 
 ## 👨‍💻 Team
 
-- Your Name
-- Team Member Name
+- Riya Duggal
+- Yashika
 
 ---
 

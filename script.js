@@ -1,4 +1,32 @@
-// Smooth scroll
+/* ============================================================
+   TABLE OF CONTENTS
+   1.  SMOOTH SCROLL
+   2.  NAVBAR — MOBILE COLLAPSE
+   3.  NAVBAR — SCROLL SHADOW EFFECT
+   4.  NAVBAR — SCROLL SPY (ACTIVE LINK HIGHLIGHT)
+   5.  SCROLL REVEAL (INTERSECTION OBSERVER)
+   6.  BACK TO TOP BUTTON
+   7.  COUNTER ANIMATION
+   8.  TOAST NOTIFICATION (UTILITY)
+   9.  DONATE PAGE — AMOUNT SELECTOR
+   10. DONATE PAGE — RECURRING / ONE-TIME TOGGLE
+   11. DONATE PAGE — FORM VALIDATION & SUBMISSION
+   12. IMPACT TABS — DYNAMIC CONTENT SWITCHER
+   13. VOLUNTEER FORM — VALIDATION & SUBMISSION
+   14. PARTNER FORM — VALIDATION & SUBMISSION
+   15. STORY SLIDER — MANUAL + AUTO SLIDE
+   16. STORY MODAL — OPEN / CLOSE
+   17. FOOTER — NEWSLETTER FORM
+   18. TESTIMONIAL CAROUSEL — AUTO-ROTATE
+   19. EVENTS — DATA, RENDER & REGISTRATION MODAL
+   ============================================================ */
+
+
+/* ============================================================
+   1. SMOOTH SCROLL
+   Intercepts clicks on nav links that point to in-page anchors
+   and scrolls to the target section smoothly.
+   ============================================================ */
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', function (e) {
     const targetId = this.getAttribute('href');
@@ -11,7 +39,12 @@ document.querySelectorAll('.nav-link').forEach(link => {
   });
 });
 
-// Navbar close mobile
+
+/* ============================================================
+   2. NAVBAR — MOBILE COLLAPSE
+   Closes the Bootstrap navbar collapse menu when a nav link
+   is clicked on small screens (viewport width < 992 px).
+   ============================================================ */
 const navLinks = document.querySelectorAll('.nav-link');
 const navbarCollapse = document.getElementById('navbarNav');
 
@@ -23,637 +56,523 @@ navLinks.forEach(link => {
   });
 });
 
-// Forms
-// ["volunteerForm","partnerForm","donateForm"].forEach(id=>{
-//   const form=document.getElementById(id);
-//   if(form){
-//     form.addEventListener("submit",e=>{
-//       e.preventDefault();
-//       showToast("Submitted successfully ✅");
-//       form.reset();
-//     });
-//   }
-// });
 
-// Toast
-function showToast(msg){
-  const toast=document.createElement("div");
-  toast.innerText=msg;
-  toast.className="toast";
-  document.body.appendChild(toast);
-  setTimeout(()=>toast.remove(),3000);
-}
-
-// Scroll reveal
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
-    }
-  });
-});
-
-document.querySelectorAll(".hidden").forEach(el=>observer.observe(el));
-
-// Navbar scroll effect
-window.addEventListener("scroll",()=>{
-  const navbar=document.querySelector(".custom-navbar");
-  if(window.scrollY>50){
-    navbar.style.boxShadow="0 4px 15px rgba(0,0,0,0.1)";
+/* ============================================================
+   3. NAVBAR — SCROLL SHADOW EFFECT
+   Adds a subtle box-shadow to the navbar once the user scrolls
+   more than 50 px from the top of the page.
+   ============================================================ */
+window.addEventListener("scroll", () => {
+  const navbar = document.querySelector(".custom-navbar");
+  if (window.scrollY > 50) {
+    navbar.style.boxShadow = "0 4px 15px rgba(0,0,0,0.1)";
   }
 });
 
-// Scroll spy
-const sections=document.querySelectorAll("section");
-const navLinks2=document.querySelectorAll(".nav-link");
 
-window.addEventListener("scroll",()=>{
-  let current="";
-  sections.forEach(section=>{
-    const top=section.offsetTop-100;
-    if(scrollY>=top){
-      current=section.getAttribute("id");
+/* ============================================================
+   4. NAVBAR — SCROLL SPY (ACTIVE LINK HIGHLIGHT)
+   Tracks which section is currently visible in the viewport
+   and adds the "active" class to the matching nav link.
+   ============================================================ */
+const sections  = document.querySelectorAll("section");
+const navLinks2 = document.querySelectorAll(".nav-link");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  /* Find the section whose top edge has been passed */
+  sections.forEach(section => {
+    const top = section.offsetTop - 100;
+    if (scrollY >= top) {
+      current = section.getAttribute("id");
     }
   });
 
-  navLinks2.forEach(link=>{
+  /* Highlight the matching nav link */
+  navLinks2.forEach(link => {
     link.classList.remove("active");
-    if(link.getAttribute("href")==="#"+current){
+    if (link.getAttribute("href") === "#" + current) {
       link.classList.add("active");
     }
   });
 });
 
-// Back to top
-const topBtn=document.getElementById("topBtn");
 
-window.addEventListener("scroll",()=>{
-  if(topBtn){
-    topBtn.style.display=window.scrollY>300?"block":"none";
+/* ============================================================
+   5. SCROLL REVEAL (INTERSECTION OBSERVER)
+   Watches all elements with class "hidden" and adds class
+   "show" once they enter the viewport.
+   ============================================================ */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  });
+});
+
+document.querySelectorAll(".hidden").forEach(el => observer.observe(el));
+
+
+/* ============================================================
+   6. BACK TO TOP BUTTON
+   Shows the button after scrolling 300 px, and scrolls
+   smoothly to the top when clicked.
+   ============================================================ */
+const topBtn = document.getElementById("topBtn");
+
+window.addEventListener("scroll", () => {
+  if (topBtn) {
+    topBtn.style.display = window.scrollY > 300 ? "block" : "none";
   }
 });
 
-if(topBtn){
-  topBtn.onclick=()=>{
-    window.scrollTo({top:0,behavior:"smooth"});
+if (topBtn) {
+  topBtn.onclick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 }
 
-// Counter animation
+
+/* ============================================================
+   7. COUNTER ANIMATION
+   Animates every ".counter" element from 0 up to its
+   "data-target" value using a rapid incremental loop.
+   ============================================================ */
 document.querySelectorAll(".counter").forEach(counter => {
   const update = () => {
     const target = +counter.getAttribute("data-target");
-    const count = +counter.innerText;
-
-    const inc = target / 100;
+    const count  = +counter.innerText;
+    const inc    = target / 100;
 
     if (count < target) {
       counter.innerText = Math.ceil(count + inc);
       setTimeout(update, 20);
     } else {
-      counter.innerText = target;
+      counter.innerText = target; /* Snap to exact target value */
     }
   };
 
   update();
 });
 
-/* ===== DONATE PAGE ===== */
 
-const amountBtns = document.querySelectorAll(".amount-btn");
-const donateMainBtn = document.querySelector(".donate-main-btn");
-const customAmount = document.getElementById("customAmount");
+/* ============================================================
+   8. TOAST NOTIFICATION (UTILITY)
+   Creates a temporary on-screen toast message that auto-
+   removes itself after 3 seconds. Used by multiple sections.
+   ============================================================ */
+function showToast(msg) {
+  const toast = document.createElement("div");
+  toast.innerText  = msg;
+  toast.className  = "toast";
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
 
-/* DEFAULT */
+
+/* ============================================================
+   9. DONATE PAGE — AMOUNT SELECTOR
+   Handles preset donation amount buttons and a free-text
+   custom amount field. Keeps "selectedAmount" in sync and
+   updates the main donate button label accordingly.
+   ============================================================ */
+const amountBtns     = document.querySelectorAll(".amount-btn");
+const donateMainBtn  = document.querySelector(".donate-main-btn");
+const customAmount   = document.getElementById("customAmount");
+
+/* Default donation amount (INR) */
 let selectedAmount = 6000;
 
-/* PRESET BUTTONS */
+/* --- Preset amount buttons --- */
 amountBtns.forEach(btn => {
-
   btn.addEventListener("click", () => {
-
+    /* Deactivate all, activate clicked */
     amountBtns.forEach(b => b.classList.remove("active"));
-
     btn.classList.add("active");
 
     selectedAmount = btn.dataset.amount;
-
     donateMainBtn.innerText = `Donate ₹${selectedAmount}`;
 
+    /* Clear custom field when a preset is chosen */
     customAmount.value = "";
   });
-
 });
 
-/* CUSTOM */
+/* --- Free-text custom amount --- */
 if (customAmount) {
-
   customAmount.addEventListener("input", () => {
-
     if (customAmount.value !== "") {
-
       selectedAmount = customAmount.value;
 
+      /* Deactivate preset buttons when custom value is typed */
       amountBtns.forEach(b => b.classList.remove("active"));
 
       donateMainBtn.innerText = `Donate ₹${selectedAmount}`;
     }
-
   });
-
 }
 
-/* TOGGLE */
+
+/* ============================================================
+   10. DONATE PAGE — RECURRING / ONE-TIME TOGGLE
+   Toggles between "One-time" and "Monthly" donation mode
+   buttons (only one active at a time).
+   ============================================================ */
 const toggleBtns = document.querySelectorAll(".toggle-btn");
 
 toggleBtns.forEach(btn => {
-
   btn.addEventListener("click", () => {
-
     toggleBtns.forEach(b => b.classList.remove("active"));
-
     btn.classList.add("active");
-
   });
-
 });
 
-/* ===== DONATION FORM VALIDATION ===== */
 
+/* ============================================================
+   11. DONATE PAGE — FORM VALIDATION & SUBMISSION
+   Validates donor name (min 3 chars) and email (regex) before
+   accepting the donation. Shows inline error messages and
+   success/error styling on each field.
+   ============================================================ */
 const donateForm = document.getElementById("donateForm");
 
 if (donateForm) {
-
   donateForm.addEventListener("submit", (e) => {
-
     e.preventDefault();
 
-    const nameInput = document.getElementById("donorName");
+    const nameInput  = document.getElementById("donorName");
     const emailInput = document.getElementById("donorEmail");
 
-    const nameError = document.getElementById("nameError");
+    const nameError  = document.getElementById("nameError");
     const emailError = document.getElementById("emailError");
 
     let valid = true;
 
-    /* RESET */
-    nameError.innerText = "";
+    /* Reset previous validation state */
+    nameError.innerText  = "";
     emailError.innerText = "";
-
-    nameInput.classList.remove("input-error", "input-success");
+    nameInput.classList.remove("input-error",  "input-success");
     emailInput.classList.remove("input-error", "input-success");
 
-    /* NAME VALIDATION */
+    /* Name — minimum 3 characters */
     if (nameInput.value.trim().length < 3) {
-
       nameError.innerText = "Enter a valid full name";
-
       nameInput.classList.add("input-error");
-
       valid = false;
-
     } else {
-
       nameInput.classList.add("input-success");
-
     }
 
-    /* EMAIL VALIDATION */
-    const emailPattern =
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+    /* Email — standard format check */
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(emailInput.value.trim())) {
-
       emailError.innerText = "Enter a valid email address";
-
       emailInput.classList.add("input-error");
-
       valid = false;
-
     } else {
-
       emailInput.classList.add("input-success");
-
     }
 
-    /* SUCCESS */
-    /* SUCCESS */
-if (valid) {
+    /* All fields valid — confirm donation and reset form */
+    if (valid) {
+      nameError.innerText  = "";
+      emailError.innerText = "";
 
-  nameError.innerText = "";
-  emailError.innerText = "";
+      alert(
+        `🎉 Thank you for donating ₹${selectedAmount}!\n\nYour support helps children build a brighter future 💙`
+      );
 
-  alert(
-  `🎉 Thank you for donating ₹${selectedAmount}!\n\nYour support helps children build a brighter future 💙`
-);
+      donateForm.reset();
+      donateMainBtn.innerText = `Donate ₹6000`;
+      selectedAmount = 6000;
 
-  donateForm.reset();
-
-  donateMainBtn.innerText =
-    `Donate ₹6000`;
-
-  selectedAmount = 6000;
-
-  nameInput.classList.remove("input-success");
-  emailInput.classList.remove("input-success");
-
-}
-
+      nameInput.classList.remove("input-success");
+      emailInput.classList.remove("input-success");
+    }
   });
-
 }
 
-/* ===== DYNAMIC NGO SECTION ===== */
 
-const impactTabs = document.querySelectorAll(".impact-tab");
-
-const impactTitle = document.getElementById("impactTitle");
-const impactText = document.getElementById("impactText");
-const impactImage = document.getElementById("impactImage");
+/* ============================================================
+   12. IMPACT TABS — DYNAMIC CONTENT SWITCHER
+   Clicking an impact tab swaps the title, body text, image,
+   background colour, heading colour, and the decorative
+   triangle colour in the impact content panel.
+   ============================================================ */
+const impactTabs    = document.querySelectorAll(".impact-tab");
+const impactTitle   = document.getElementById("impactTitle");
+const impactText    = document.getElementById("impactText");
+const impactImage   = document.getElementById("impactImage");
 const impactContent = document.getElementById("impactContent");
 
 impactTabs.forEach(tab => {
-
   tab.addEventListener("click", () => {
-
-    /* ACTIVE TAB */
+    /* Mark only this tab as active */
     impactTabs.forEach(t => t.classList.remove("active"));
-
     tab.classList.add("active");
 
-    /* CHANGE CONTENT */
+    /* Swap text and image */
     impactTitle.innerText = tab.dataset.title;
+    impactText.innerText  = tab.dataset.text;
+    impactImage.src       = tab.dataset.image;
 
-    impactText.innerText = tab.dataset.text;
+    /* Update panel background and heading colour */
+    impactContent.style.background = tab.dataset.color;
+    impactTitle.style.color        = tab.dataset.textcolor;
 
-    impactImage.src = tab.dataset.image;
+    /* Reset all tab triangles, then colour the active one */
+    const triangles = document.querySelectorAll(".impact-triangle");
+    triangles.forEach(triangle => {
+      triangle.style.borderTopColor = "transparent";
+    });
 
-    /* CHANGE BACKGROUND COLOR */
-    /* BACKGROUND */
-impactContent.style.background = tab.dataset.color;
+    const activeTriangle = tab.querySelector(".impact-triangle");
+    activeTriangle.style.borderTopColor = tab.dataset.color;
 
-/* HEADING COLOR */
-impactTitle.style.color = tab.dataset.textcolor;
-
-/* TRIANGLE COLOR */
-
-const triangles =
-  document.querySelectorAll(".impact-triangle");
-
-triangles.forEach(triangle => {
-  triangle.style.borderTopColor = "transparent";
-});
-
-const activeTriangle =
-  tab.querySelector(".impact-triangle");
-
-activeTriangle.style.borderTopColor =
-  tab.dataset.color;
-
-impactTab.style.color = tab.dataset.textcolor;
-
+    impactTab.style.color = tab.dataset.textcolor;
   });
-
 });
 
-/* ===== VOLUNTEER VALIDATION ===== */
 
-const volunteerForm =
-  document.getElementById("volunteerForm");
+/* ============================================================
+   13. VOLUNTEER FORM — VALIDATION & SUBMISSION
+   Validates name (min 3 chars), email (regex), and phone
+   (10 digits). Shows a toast on success and resets the form.
+   ============================================================ */
+const volunteerForm = document.getElementById("volunteerForm");
 
 if (volunteerForm) {
-
   volunteerForm.addEventListener("submit", (e) => {
-
     e.preventDefault();
 
-    const name =
-      document.getElementById("volunteerName");
+    const name  = document.getElementById("volunteerName");
+    const email = document.getElementById("volunteerEmail");
+    const phone = document.getElementById("volunteerPhone");
 
-    const email =
-      document.getElementById("volunteerEmail");
-
-    const phone =
-      document.getElementById("volunteerPhone");
-
-    const nameError =
-      document.getElementById("volunteerNameError");
-
-    const emailError =
-      document.getElementById("volunteerEmailError");
-
-    const phoneError =
-      document.getElementById("volunteerPhoneError");
+    const nameError  = document.getElementById("volunteerNameError");
+    const emailError = document.getElementById("volunteerEmailError");
+    const phoneError = document.getElementById("volunteerPhoneError");
 
     let valid = true;
 
-    /* RESET */
-    nameError.innerText = "";
+    /* Reset previous validation state */
+    nameError.innerText  = "";
     emailError.innerText = "";
     phoneError.innerText = "";
-
-    name.classList.remove("input-error", "input-success");
+    name.classList.remove("input-error",  "input-success");
     email.classList.remove("input-error", "input-success");
     phone.classList.remove("input-error", "input-success");
 
-    /* NAME */
+    /* Name — minimum 3 characters */
     if (name.value.trim().length < 3) {
-
-      nameError.innerText =
-        "Enter a valid full name";
-
+      nameError.innerText = "Enter a valid full name";
       name.classList.add("input-error");
-
       valid = false;
-
     } else {
-
       name.classList.add("input-success");
-
     }
 
-    /* EMAIL */
-    const emailPattern =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+    /* Email — standard format check */
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email.value.trim())) {
-
-      emailError.innerText =
-        "Enter a valid email address";
-
+      emailError.innerText = "Enter a valid email address";
       email.classList.add("input-error");
-
       valid = false;
-
     } else {
-
       email.classList.add("input-success");
-
     }
 
-    /* PHONE */
-    const phonePattern =
-      /^[0-9]{10}$/;
-
+    /* Phone — exactly 10 digits */
+    const phonePattern = /^[0-9]{10}$/;
     if (!phonePattern.test(phone.value.trim())) {
-
-      phoneError.innerText =
-        "Enter a valid 10-digit phone number";
-
+      phoneError.innerText = "Enter a valid 10-digit phone number";
       phone.classList.add("input-error");
-
       valid = false;
-
     } else {
-
       phone.classList.add("input-success");
-
     }
 
-    /* SUCCESS */
+    /* All fields valid — show toast and reset */
     if (valid) {
-
       showToast("Volunteer Form Submitted 💚");
-
       volunteerForm.reset();
-
       name.classList.remove("input-success");
       email.classList.remove("input-success");
       phone.classList.remove("input-success");
-
     }
-
   });
-
 }
 
-/* ===== PARTNER VALIDATION ===== */
 
-const partnerForm =
-  document.getElementById("partnerForm");
+/* ============================================================
+   14. PARTNER FORM — VALIDATION & SUBMISSION
+   Validates organisation name, contact person (both min 3
+   chars), email (regex), and phone (10 digits). Shows a
+   toast on success and resets the form.
+   ============================================================ */
+const partnerForm = document.getElementById("partnerForm");
 
 if (partnerForm) {
-
   partnerForm.addEventListener("submit", (e) => {
-
     e.preventDefault();
 
-    const org =
-      document.getElementById("partnerOrg");
+    const org    = document.getElementById("partnerOrg");
+    const person = document.getElementById("partnerPerson");
+    const email  = document.getElementById("partnerEmail");
+    const phone  = document.getElementById("partnerPhone");
 
-    const person =
-      document.getElementById("partnerPerson");
-
-    const email =
-      document.getElementById("partnerEmail");
-
-    const phone =
-      document.getElementById("partnerPhone");
-
-    const orgError =
-      document.getElementById("partnerOrgError");
-
-    const personError =
-      document.getElementById("partnerPersonError");
-
-    const emailError =
-      document.getElementById("partnerEmailError");
-
-    const phoneError =
-      document.getElementById("partnerPhoneError");
+    const orgError    = document.getElementById("partnerOrgError");
+    const personError = document.getElementById("partnerPersonError");
+    const emailError  = document.getElementById("partnerEmailError");
+    const phoneError  = document.getElementById("partnerPhoneError");
 
     let valid = true;
 
-    /* RESET */
-    orgError.innerText = "";
+    /* Reset previous validation state */
+    orgError.innerText    = "";
     personError.innerText = "";
-    emailError.innerText = "";
-    phoneError.innerText = "";
-
-    org.classList.remove("input-error", "input-success");
+    emailError.innerText  = "";
+    phoneError.innerText  = "";
+    org.classList.remove("input-error",    "input-success");
     person.classList.remove("input-error", "input-success");
-    email.classList.remove("input-error", "input-success");
-    phone.classList.remove("input-error", "input-success");
+    email.classList.remove("input-error",  "input-success");
+    phone.classList.remove("input-error",  "input-success");
 
-    /* ORGANIZATION */
+    /* Organisation name — minimum 3 characters */
     if (org.value.trim().length < 3) {
-
-      orgError.innerText =
-        "Enter organization name";
-
+      orgError.innerText = "Enter organization name";
       org.classList.add("input-error");
-
       valid = false;
-
     } else {
-
       org.classList.add("input-success");
-
     }
 
-    /* CONTACT PERSON */
+    /* Contact person — minimum 3 characters */
     if (person.value.trim().length < 3) {
-
-      personError.innerText =
-        "Enter contact person name";
-
+      personError.innerText = "Enter contact person name";
       person.classList.add("input-error");
-
       valid = false;
-
     } else {
-
       person.classList.add("input-success");
-
     }
 
-    /* EMAIL */
-    const emailPattern =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+    /* Email — standard format check */
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email.value.trim())) {
-
-      emailError.innerText =
-        "Enter a valid email address";
-
+      emailError.innerText = "Enter a valid email address";
       email.classList.add("input-error");
-
       valid = false;
-
     } else {
-
       email.classList.add("input-success");
-
     }
 
-    /* PHONE */
-    const phonePattern =
-      /^[0-9]{10}$/;
-
+    /* Phone — exactly 10 digits */
+    const phonePattern = /^[0-9]{10}$/;
     if (!phonePattern.test(phone.value.trim())) {
-
-      phoneError.innerText =
-        "Enter a valid 10-digit phone number";
-
+      phoneError.innerText = "Enter a valid 10-digit phone number";
       phone.classList.add("input-error");
-
       valid = false;
-
     } else {
-
       phone.classList.add("input-success");
-
     }
 
-    /* SUCCESS */
+    /* All fields valid — show toast and reset */
     if (valid) {
-
       showToast("Partner Request Submitted 🤝");
-
       partnerForm.reset();
-
       org.classList.remove("input-success");
       person.classList.remove("input-success");
       email.classList.remove("input-success");
       phone.classList.remove("input-success");
-
     }
-
   });
-
 }
 
-const slider = document.querySelector(".slider-container");
-const cards = document.querySelectorAll(".story-card");
 
-const nextBtn = document.querySelector(".next");
-const prevBtn = document.querySelector(".prev");
+/* ============================================================
+   15. STORY SLIDER — MANUAL + AUTO SLIDE
+   A simple translateX-based slider for ".story-card" elements.
+   Supports previous/next buttons and auto-advances every 4 s.
+   ============================================================ */
+const slider     = document.querySelector(".slider-container");
+const cards      = document.querySelectorAll(".story-card");
+const nextBtn    = document.querySelector(".next");
+const prevBtn    = document.querySelector(".prev");
 
-let index = 0;
+let index      = 0;
 const totalCards = cards.length;
 
+/* Move the strip to show the card at "index" */
 function updateSlider() {
   slider.style.transform = `translateX(-${index * 100}%)`;
 }
 
-/* NEXT BUTTON */
+/* Next button — wraps around to the first card */
 nextBtn.addEventListener("click", () => {
   index++;
-
-  if (index >= totalCards) {
-    index = 0;
-  }
-
+  if (index >= totalCards) index = 0;
   updateSlider();
 });
 
-/* PREV BUTTON */
+/* Previous button — wraps around to the last card */
 prevBtn.addEventListener("click", () => {
   index--;
-
-  if (index < 0) {
-    index = totalCards - 1;
-  }
-
+  if (index < 0) index = totalCards - 1;
   updateSlider();
 });
 
-/* AUTO SLIDE */
+/* Auto-advance every 4 seconds */
 setInterval(() => {
   index++;
-
-  if (index >= totalCards) {
-    index = 0;
-  }
-
+  if (index >= totalCards) index = 0;
   updateSlider();
 }, 4000);
 
 
-
-const modal = document.getElementById("storyModal");
-const modalTitle = document.getElementById("modalTitle");
-const modalText = document.getElementById("modalText");
-
+/* ============================================================
+   16. STORY MODAL — OPEN / CLOSE
+   Populates a modal with a story's title and body text when
+   a ".open-story" button is clicked. Closes on the close
+   button or a click outside the modal box.
+   ============================================================ */
+const modal       = document.getElementById("storyModal");
+const modalTitle  = document.getElementById("modalTitle");
+const modalText   = document.getElementById("modalText");
 const openButtons = document.querySelectorAll(".open-story");
-const closeBtn = document.querySelector(".close-btn");
+const closeBtn    = document.querySelector(".close-btn");
 
-/* OPEN MODAL */
+/* Open modal and populate content from data attributes */
 openButtons.forEach(button => {
-
-  button.addEventListener("click", function(e){
-
+  button.addEventListener("click", function(e) {
     e.preventDefault();
-
     modalTitle.innerText = this.dataset.title;
-    modalText.innerText = this.dataset.text;
-
+    modalText.innerText  = this.dataset.text;
     modal.classList.add("show");
-
   });
-
 });
 
-/* CLOSE MODAL */
-closeBtn.addEventListener("click", function(){
-
+/* Close modal via the close button */
+closeBtn.addEventListener("click", function() {
   modal.classList.remove("show");
-
 });
 
-/* CLOSE WHEN CLICKING OUTSIDE */
-window.addEventListener("click", function(e){
-
-  if(e.target === modal){
-
+/* Close modal when clicking on the backdrop (outside the box) */
+window.addEventListener("click", function(e) {
+  if (e.target === modal) {
     modal.classList.remove("show");
-
   }
-
 });
 
-// Footer Newsletter Form
+
+/* ============================================================
+   17. FOOTER — NEWSLETTER FORM
+   Validates that the email field is non-empty, then shows a
+   toast and resets the form.
+   ============================================================ */
 const footerNewsletter = document.getElementById('footerNewsletterForm');
+
 if (footerNewsletter) {
   footerNewsletter.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -666,89 +585,86 @@ if (footerNewsletter) {
 }
 
 
-/* ===== TESTIMONIAL CAROUSEL WITH AUTO-ROTATE ===== */
+/* ============================================================
+   18. TESTIMONIAL CAROUSEL — AUTO-ROTATE
+   IIFE that manages a multi-slide testimonial section with:
+   - Auto-rotation every 5 s (pauses on hover)
+   - Manual prev / next buttons
+   - Dot indicator click navigation
+   - Keyboard arrow-key support while hovering
+   - Auto-resumes 10 s after the last manual interaction
+   ============================================================ */
 (function() {
-  let currentSlide = 0;
+  let currentSlide      = 0;
   let autoRotateInterval;
-  let isAutoRotating = true;
-  const rotationDelay = 5000; // 5 seconds per slide
-  
-  const slides = document.querySelectorAll('.testimonial-slide');
-  const dots = document.querySelectorAll('.dot');
-  const prevBtn = document.getElementById('testimonialPrev');
-  const nextBtn = document.getElementById('testimonialNext');
+  let isAutoRotating    = true;
+  const rotationDelay   = 5000; /* ms between auto-advances */
+
+  const slides      = document.querySelectorAll('.testimonial-slide');
+  const dots        = document.querySelectorAll('.dot');
+  const prevBtn     = document.getElementById('testimonialPrev');
+  const nextBtn     = document.getElementById('testimonialNext');
   const progressBar = document.querySelector('.auto-rotate-progress');
-  
-  // Only initialize if carousel exists
+
+  /* Bail out if the carousel markup is not on this page */
   if (slides.length === 0) return;
-  
-  // Function to show specific slide
+
+  /* Show a specific slide by index (handles wrap-around) */
   function showSlide(index) {
-    // Remove active class from all slides and dots
     slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    
-    // Handle wrap-around
-    if (index < 0) index = slides.length - 1;
+    dots.forEach(dot   => dot.classList.remove('active'));
+
+    if (index < 0)              index = slides.length - 1;
     if (index >= slides.length) index = 0;
-    
+
     currentSlide = index;
-    
-    // Add active class to current slide and dot
     slides[currentSlide].classList.add('active');
     if (dots[currentSlide]) dots[currentSlide].classList.add('active');
-    
-    // Reset progress bar animation
+
+    /* Re-clone progress bar to restart its CSS animation */
     if (progressBar && isAutoRotating) {
       const newProgress = progressBar.cloneNode(true);
       progressBar.parentNode.replaceChild(newProgress, progressBar);
     }
   }
-  
-  // Next slide function
+
+  /* Advance to the next slide and restart the timer */
   function nextSlide() {
     showSlide(currentSlide + 1);
     resetAutoRotate();
   }
-  
-  // Previous slide function
+
+  /* Go back one slide and restart the timer */
   function prevSlide() {
     showSlide(currentSlide - 1);
     resetAutoRotate();
   }
-  
-  // Reset auto-rotate timer
+
+  /* Clear existing interval and restart if auto-rotate is on */
   function resetAutoRotate() {
-    if (autoRotateInterval) {
-      clearInterval(autoRotateInterval);
-    }
-    if (isAutoRotating) {
-      startAutoRotate();
-    }
+    if (autoRotateInterval) clearInterval(autoRotateInterval);
+    if (isAutoRotating) startAutoRotate();
   }
-  
-  // Start auto-rotate
+
+  /* Begin the auto-rotation interval */
   function startAutoRotate() {
     autoRotateInterval = setInterval(() => {
-      if (isAutoRotating) {
-        nextSlide();
-      }
+      if (isAutoRotating) nextSlide();
     }, rotationDelay);
   }
-  
-  // Stop auto-rotate (on user interaction)
+
+  /* Stop auto-rotation (triggered by manual user interaction) */
   function stopAutoRotate() {
     isAutoRotating = false;
     if (autoRotateInterval) {
       clearInterval(autoRotateInterval);
       autoRotateInterval = null;
     }
-    // Change indicator text
     const indicatorText = document.querySelector('.auto-rotate-text');
     if (indicatorText) indicatorText.textContent = 'Paused';
   }
-  
-  // Resume auto-rotate (optional - after 10 seconds of inactivity)
+
+  /* Resume auto-rotation after 10 s of inactivity */
   let resumeTimeout;
   function resumeAutoRotate() {
     if (resumeTimeout) clearTimeout(resumeTimeout);
@@ -759,10 +675,10 @@ if (footerNewsletter) {
         const indicatorText = document.querySelector('.auto-rotate-text');
         if (indicatorText) indicatorText.textContent = 'Auto-rotating';
       }
-    }, 10000); // Resume after 10 seconds of inactivity
+    }, 10000);
   }
-  
-  // Event Listeners
+
+  /* Previous button */
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
       prevSlide();
@@ -770,7 +686,8 @@ if (footerNewsletter) {
       resumeAutoRotate();
     });
   }
-  
+
+  /* Next button */
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
       nextSlide();
@@ -778,8 +695,8 @@ if (footerNewsletter) {
       resumeAutoRotate();
     });
   }
-  
-  // Dot click handlers
+
+  /* Dot indicators */
   dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
       showSlide(index);
@@ -787,8 +704,8 @@ if (footerNewsletter) {
       resumeAutoRotate();
     });
   });
-  
-  // Pause on hover
+
+  /* Pause on mouse enter, resume on mouse leave */
   const carousel = document.querySelector('.testimonial-carousel');
   if (carousel) {
     carousel.addEventListener('mouseenter', () => {
@@ -797,18 +714,15 @@ if (footerNewsletter) {
         autoRotateInterval = null;
       }
     });
-    
+
     carousel.addEventListener('mouseleave', () => {
       if (isAutoRotating && !autoRotateInterval) {
         startAutoRotate();
       }
     });
   }
-  
-  // Start auto-rotate
-  startAutoRotate();
-  
-  // Keyboard navigation
+
+  /* Keyboard navigation (left / right arrows while hovering) */
   document.addEventListener('keydown', (e) => {
     if (carousel && carousel.matches(':hover')) {
       if (e.key === 'ArrowLeft') {
@@ -822,14 +736,25 @@ if (footerNewsletter) {
       }
     }
   });
+
+  /* Kick off auto-rotation on page load */
+  startAutoRotate();
 })();
 
 
-  // <!-----======================================================================
-  //     JOIN US SECTION
-  // ==============================-!>
-  // events.js - Interactive Events with Registration
+/* ============================================================
+   19. EVENTS — DATA, RENDER & REGISTRATION MODAL
 
+   - events[]         : source data for all event cards
+   - locIcon()        : returns an inline SVG pin icon
+   - timeIcon()       : returns an inline SVG clock icon
+   - renderEvents()   : builds the featured + side-card layout
+   - openRegisterModal(): opens the registration modal for an event
+   - Modal close listeners handle button click and backdrop click
+   - registerSubmitBtn validates name + email before confirming
+   ============================================================ */
+
+/* --- Event data source --- */
 const events = [
   {
     tag: '#FoodCamp',
@@ -838,7 +763,7 @@ const events = [
     location: 'Sukhna Lake, Chandigarh',
     time: '2 pm',
     day: '10', mon: 'Jun',
-    img: 'https://storage.googleapis.com/peporg-bucket/blog_images/Donate_Food_on_Your_Birthday_-_Orphanage_Children_in_Hyderabad.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=pep-admin%40pepfoundation.iam.gserviceaccount.com%2F20260519%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260519T160801Z&X-Goog-Expires=86400&X-Goog-SignedHeaders=host&X-Goog-Signature=2db95644c91a5e5deee6503514ee7e96ba89a011b0c79187600d7bc69486a13aca6524a6a73702c6fe75d49085d36f2b4aa11660b2d55b2b3ac78dfce860e89974ef324979f9c04282962bc73ca8d77e6d54ee561a52e922e0cf4a11e4d1af09da09f6fbb30853aeb8be6e564862fb827f24fdf99a540ad0c9603321aca36360923de9c070543a4f166e4b6d7e510870ec49e1ad0f41bb695f16154fb2dd380d72273d8e228564bc553e524af618856b40df768224c020f6c7e4f57b40db29a53909b0bb8e3bca7db21006f2cea60aa5b302c7fd91ce034343f87033850ab7039780013b7c4c9a64da8bfe5b5a39dbce235da81a75a8de66ff43c6504b83e3cc', // ← put your image path here
+    img: 'https://as2.ftcdn.net/jpg/02/87/65/37/1000_F_287653730_bZdLt5mKknPjiWCsmvdS3FhnT5WvIsEk.jpg',
     featured: true
   },
   {
@@ -864,6 +789,7 @@ const events = [
   }
 ];
 
+/* --- Inline SVG helpers for meta icons --- */
 function locIcon() {
   return `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D85A30" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>`;
 }
@@ -871,11 +797,13 @@ function timeIcon() {
   return `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D85A30" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>`;
 }
 
+/* --- Render the events grid (featured card + side cards) --- */
 function renderEvents() {
-  const grid = document.getElementById('eventsGrid');
-  const featured = events[0];
-  const sides = events.slice(1);
+  const grid     = document.getElementById('eventsGrid');
+  const featured = events[0];       /* First event gets the large featured card */
+  const sides    = events.slice(1); /* Remaining events become compact side cards */
 
+  /* Featured card HTML */
   const featuredHTML = `
     <div class="featured-card">
       ${featured.img
@@ -899,6 +827,7 @@ function renderEvents() {
       </div>
     </div>`;
 
+  /* Side cards HTML */
   const sideCardsHTML = `
     <div class="side-cards">
       ${sides.map(e => `
@@ -922,32 +851,35 @@ function renderEvents() {
   grid.innerHTML = featuredHTML + sideCardsHTML;
 }
 
-// Modal logic
+/* --- Open the registration modal pre-filled with event title --- */
 function openRegisterModal(title) {
   document.getElementById('registerModalTitle').textContent = 'Register — ' + title;
-  document.getElementById('registerName').value = '';
+  document.getElementById('registerName').value  = '';
   document.getElementById('registerEmail').value = '';
   document.getElementById('registerModal').style.display = 'flex';
 }
 
+/* Close modal via the × button */
 document.querySelector('.register-modal-close').addEventListener('click', () => {
   document.getElementById('registerModal').style.display = 'none';
 });
 
+/* Close modal when clicking on the backdrop */
 document.getElementById('registerModal').addEventListener('click', function(e) {
   if (e.target === this) this.style.display = 'none';
 });
 
+/* Validate name + email before confirming registration */
 document.getElementById('registerSubmitBtn').addEventListener('click', () => {
-  const name = document.getElementById('registerName').value.trim();
+  const name  = document.getElementById('registerName').value.trim();
   const email = document.getElementById('registerEmail').value.trim();
+
   if (!name || !email) { alert('Please fill in all fields.'); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Enter a valid email.'); return; }
+
   document.getElementById('registerModal').style.display = 'none';
   alert(`✓ Registered! See you at the event, ${name}.`);
 });
 
-// Also update your HTML title if needed:
-// <h1 class="events-title">Upcoming <span class="highlight">events</span></h1>
-
+/* Kick off the events render on page load */
 renderEvents();

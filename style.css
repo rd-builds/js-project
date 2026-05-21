@@ -950,6 +950,7 @@ section {
   overflow: hidden;
 }
 
+
 /* Sliding track */
 .slider-container {
   display: flex;
@@ -1013,7 +1014,7 @@ section {
 }
 
 /* Prev / Next arrow buttons */
-.nav-btn {
+/* .nav-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -1026,10 +1027,43 @@ section {
   cursor: pointer;
   font-size: 22px;
   z-index: 10;
+} */
+
+.nav-btn {
+
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 55px;
+
+  height: 55px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: white;
+
+  box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+
+  cursor: pointer;
+
+  font-size: 24px;
+
+  z-index: 100;
+
 }
 
-.prev { left:  -25px; }
-.next { right: -25px; }
+.prev {
+  left: 15px;
+}
+
+.next {
+  right: 15px;
+}
 
 
 /* ============================================================

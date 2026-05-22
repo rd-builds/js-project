@@ -759,7 +759,7 @@ section {
 }
 
 /* Three-column layout: left · circle · right */
-.narrative-container {
+/* .narrative-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -775,7 +775,261 @@ section {
   display: flex;
   align-items: flex-start;
   gap: 18px;
+} */
+
+/* SECTION BACKGROUND */
+.narrative-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  padding: 80px 60px;
+  background: linear-gradient(to bottom right, #eef6fb, #dceef7);
+  position: relative;
+  overflow: hidden;
 }
+
+/* FLOATING BACKGROUND BLOBS */
+.narrative-container::before,
+.narrative-container::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: rgba(76, 175, 80, 0.08);
+  border-radius: 50%;
+  z-index: 0;
+  animation: floatBlob 7s ease-in-out infinite;
+}
+
+.narrative-container::before {
+  top: -100px;
+  left: -100px;
+}
+
+.narrative-container::after {
+  bottom: -120px;
+  right: -100px;
+  animation-delay: 2s;
+}
+
+@keyframes floatBlob {
+  0%,100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-25px);
+  }
+}
+
+/* LEFT & RIGHT */
+.left-content,
+.right-content {
+  flex: 1;
+  z-index: 2;
+}
+
+/* CONTENT CARDS */
+.content-block {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+  padding: 25px;
+  border-radius: 24px;
+
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(10px);
+
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.content-block:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+/* NUMBER CIRCLES */
+.number {
+  min-width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: bold;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 0.4s ease;
+}
+
+.content-block:hover .number {
+  transform: rotate(15deg) scale(1.15);
+}
+
+/* COLORS */
+.blue {
+  border: 3px solid #4f8ef7;
+  color: #4f8ef7;
+}
+
+.green {
+  border: 3px solid #43a047;
+  color: #43a047;
+}
+
+.orange {
+  border: 3px solid #ef6c00;
+  color: #ef6c00;
+}
+
+/* HEADINGS */
+.blue-text,
+.green-text,
+.orange-text {
+  font-size: 30px;
+  margin-bottom: 16px;
+  transition: 0.3s ease;
+}
+
+.content-block:hover h2 {
+  transform: translateX(5px);
+}
+
+.blue-text {
+  color: #1e4fa3;
+}
+
+.green-text {
+  color: #2e7d32;
+}
+
+.orange-text {
+  color: #ef6c00;
+}
+
+/* LISTS */
+ul {
+  padding-left: 20px;
+  line-height: 1.8;
+  color: #444;
+}
+
+.sub-list {
+  margin-top: 12px;
+}
+
+/* CENTER CIRCLE */
+.circle-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+/* DONUT RING */
+.circle-ring {
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      #c86f5d 0deg 145deg,
+      #f4f4f4 145deg 155deg,
+      #8fbc8f 155deg 290deg,
+      #f4f4f4 290deg 300deg,
+      #e7b55c 300deg 360deg
+    );
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  animation: rotateRing 2s ease;
+  transition: 0.5s ease;
+}
+
+.circle-ring:hover {
+  transform: rotate(8deg) scale(1.03);
+}
+
+@keyframes rotateRing {
+  from {
+    transform: rotate(-180deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+/* INNER CIRCLE */
+.circle-inner {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: #fdfaf6;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}
+
+/* ICON */
+.plant-icon {
+  font-size: 60px;
+  margin-bottom: 15px;
+
+  animation: floatPlant 3s ease-in-out infinite;
+}
+
+@keyframes floatPlant {
+  0%,100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* TEXT */
+.circle-inner h3 {
+  font-size: 40px;
+  color: #6b8e23;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media(max-width: 1100px) {
+
+  .narrative-container {
+    flex-direction: column;
+    padding: 50px 25px;
+  }
+
+  .circle-ring {
+    width: 300px;
+    height: 300px;
+  }
+
+  .circle-inner {
+    width: 210px;
+    height: 210px;
+  }
+
+  .circle-inner h3 {
+    font-size: 28px;
+  }
+
+}
+
+
 
 /* Numbered circle badge */
 .number {
